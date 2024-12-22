@@ -20,7 +20,7 @@ In a microservices architecture, effective log management is crucial for operati
 3. **Pub-Sub Model (Kafka)**: Facilitates asynchronous log distribution.
 4. **Log Storage (Elasticsearch)**: Indexes and stores logs for efficient querying.
 5. **Alerting System**: Listens for critical logs and triggers alerts.
-
+![dls](https://github.com/user-attachments/assets/d5d65f05-2539-4df3-a062-0129bfad4e46)
 ---
 
 ## Tools and Technologies
