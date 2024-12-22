@@ -21,7 +21,8 @@ In a microservices architecture, effective log management is crucial for operati
 4. **Log Storage (Elasticsearch)**: Indexes and stores logs for efficient querying.
 5. **Alerting System**: Listens for critical logs and triggers alerts.
 
-!(https://github.com/user-attachments/assets/d5d65f05-2539-4df3-a062-0129bfad4e46)
+![dls](https://github.com/user-attachments/assets/14d2d2d5-12b6-4819-b388-3b2f4810d209)
+
 ---
 
 ## Tools and Technologies
