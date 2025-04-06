@@ -26,7 +26,6 @@ In a microservices architecture, effective log management is crucial for operati
 ---
 
 ## Tools and Technologies
-
 - **Programming Language**: Python
 - **Log Accumulator**: Fluentd
 - **Pub-Sub Model**: Apache Kafka
@@ -41,13 +40,12 @@ In a microservices architecture, effective log management is crucial for operati
 - Two Virtual Machines (VMs) on VirtualBox:
   - **Seed VM (Producer)**: Runs Kafka and Fluentd.
   - **Ubuntu VM (Consumer)**: Hosts Kafka, Elasticsearch, and Kibana.
-
 - **Network Configuration**:
   - Create a new NAT network in VirtualBox to assign different IPs to each VM.
   - Check and note the IPs of both VMs using:
-    ```bash
-    ip a
-    ```
+  ```bash
+  ip a
+  ```
   - Update the code and Fluentd configuration files with the respective IPs.
 
 ---
@@ -56,36 +54,63 @@ In a microservices architecture, effective log management is crucial for operati
 
 To run this project, follow these steps:
 
-### Step 1: Start Services on the Seed VM (Producer)
-Run the following commands to start Kafka and Fluentd:
+### On Ubuntu VM (Consumer):
+
+#### Step 1: Configure Kafka Server Properties
+```bash
+cd /etc
+nano /usr/local/kafka/config/server.properties
+```
+- Uncomment the following line in the server.properties file:
+  ```
+  advertised.listeners=PLAINTEXT://192.168.56.101:9092
+  ```
+  (Replace the IP with your Ubuntu VM's actual IP address)
+
+#### Step 2: Start Services on the Ubuntu VM
+```bash
+sudo systemctl start kafka
+sudo systemctl start elasticsearch
+sudo systemctl start kibana
+```
+
+#### Step 3: Run the Alerting System
+```bash
+python3 alerting_system.py
+```
+
+### On Seed VM (Producer):
+
+#### Step 4: Start Services on the Seed VM
 ```bash
 sudo systemctl start kafka
 sudo systemctl start fluentd
 ```
-### Step 2: Start Services on the Ubuntu VM (Consumer)
-Run the following commands to start Kafka ,Elasticsearch and Kibana:
+
+#### Step 5: Configure and Run Fluentd
 ```bash
-sudo systemctl start kafka 
-sudo systemctl start elasticsearch 
-sudo systemctl start kibana
-```
-### Step 3: Run consumer.py on Seed VM
-```bash
-python3 consumer.py
-```
-### Step 4: Run fluentd configuration file
-```bash
+cd /etc/fluent
 sudo fluentd -c fluent1.conf
 sudo fluentd -c fluent2.conf
 sudo fluentd -c fluent3.conf
 ```
-### Step 5: Run all microServices file on Seed VM 
+
+#### Step 6: Run the Kafka Consumer
+```bash
+python3 consumer.py
+```
+
+#### Step 7: Run all Microservices
 ```bash
 python3 microServices1.py
 python3 microServices2.py
 python3 microServices3.py
 ```
-### Step 6: Run alerting_system file on Ubuntu Vm
-```bash
-python3 alerting_system.py
-```
+
+---
+
+## Verification
+
+After completing the setup, you can access:
+- Kibana dashboard at `http://<UBUNTU_VM_IP>:5601`
+- View logs and set up visualizations for your microservices
